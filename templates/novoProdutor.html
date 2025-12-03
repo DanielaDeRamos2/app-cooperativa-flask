@@ -1,0 +1,19 @@
+<form method="POST" enctype="multipart/form-data">
+    <input type="text" name="nome" placeholder="Nome completo" required>
+    <input type="text" name="cpf" placeholder="CPF" required>
+    <input type="text" name="telefone" placeholder="Telefone" required>
+    <input type="email" name="email" placeholder="E-mail" required>
+    <textarea name="endereco" placeholder="Endereço"></textarea>
+    <textarea name="certificacoes" placeholder="Certificações"></textarea>
+    <textarea name="descricao" placeholder="Descrição da propriedade"></textarea>
+
+    <label>Categorias</label>
+    {% for c in categorias %}
+        <input type="checkbox" name="categorias" value="{{ c.id }}"> {{ c.nome }}<br>
+    {% endfor %}
+
+    <label>Fotos</label>
+    <input type="file" name="fotos" multiple>
+
+    <button type="submit">Salvar</button>
+</form>

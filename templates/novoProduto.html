@@ -1,0 +1,45 @@
+<form method="POST" enctype="multipart/form-data">
+    <input name="nome" placeholder="Nome" required>
+    <textarea name="descricao" placeholder="Descrição"></textarea>
+    <input name="preco" placeholder="Preço" required>
+    <select name="unidade">
+        <option value="kg">kg</option>
+        <option value="un">un</option>
+        <option value="L">L</option>
+        <option value="dz">dz</option>
+    </select>
+
+    <input name="estoque" placeholder="Estoque" required>
+
+    <label>Categoria</label>
+    <select name="categoria">
+        {% for c in categorias %}
+            <option value="{{ c.id }}">{{ c.nome }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Produtor</label>
+    <select name="produtor">
+        {% for p in produtores %}
+            <option value="{{ p.id }}">{{ p.nome }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Tags</label>
+    <input type="checkbox" name="tags" value="orgânico"> Orgânico
+    <input type="checkbox" name="tags" value="artesanal"> Artesanal
+    <input type="checkbox" name="tags" value="sem-agrotoxico"> Sem agrotóxico
+
+    <label>Promoção</label>
+    <input type="checkbox" name="promocao"> Produto em promoção
+    <input name="preco_promocional" placeholder="Preço promocional">
+
+    <label>Sazonalidade</label>
+    <input type="date" name="inicio_sazonal">
+    <input type="date" name="fim_sazonal">
+
+    <label>Imagens (até 5)</label>
+    <input type="file" name="imagens" multiple>
+
+    <button type="submit">Salvar</button>
+</form>

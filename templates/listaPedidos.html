@@ -1,0 +1,37 @@
+<h2>Pedidos – {{ status }}</h2>
+
+<form method="GET">
+  <select name="status" onchange="this.form.submit()">
+    <option>Aguardando confirmação</option>
+    <option>Em preparação</option>
+    <option>Pronto para retirada/entrega</option>
+    <option>Concluído</option>
+    <option>Cancelado</option>
+  </select>
+</form>
+
+<table>
+<tr><th>ID</th><th>Cliente</th><th>Total</th><th>Ações</th></tr>
+
+{% for p in pedidos %}
+<tr>
+  <td>{{ p.id }}</td>
+  <td>{{ p.cliente.nome }}</td>
+  <td>R$ {{ p.total }}</td>
+  <td>
+    <form action="/admin/pedidos/status/{{ p.id }}" method="post">
+      <select name="status">
+        <option value="Aguardando confirmação">Aguardando</option>
+        <option value="Em preparação">Preparando</option>
+        <option value="Pronto para retirada/entrega">Pronto</option>
+        <option value="Concluído">Concluído</option>
+        <option value="Cancelado">Cancelar</option>
+      </select>
+      <button>OK</button>
+    </form>
+
+    <a href="/admin/pedidos/divisao/{{ p.id }}">Ver divisão</a>
+  </td>
+</tr>
+{% endfor %}
+</table>

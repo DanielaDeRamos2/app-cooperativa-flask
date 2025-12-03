@@ -1,25 +1,34 @@
-# app/models/produto.py
-from .base import db
-from sqlalchemy.dialects.postgresql import JSON
+from app import db
+from datetime import datetime
 
 class Produto(db.Model):
-    __tablename__ = "produtos"
-
     id = db.Column(db.Integer, primary_key=True)
 
-    nome = db.Column(db.String(120), nullable=False)
-    descricao = db.Column(db.Text)
+    nome = db.Column(db.String(150), nullable=False)
+    descricao = db.Column(db.Text, nullable=False)
     preco = db.Column(db.Float, nullable=False)
-    unidade = db.Column(db.String(20), nullable=False)
+    unidade = db.Column(db.String(20), nullable=False)   # kg, un, L, dz etc.
 
-    produtor_id = db.Column(db.Integer, db.ForeignKey("produtores.id"), nullable=False)
-    categoria_id = db.Column(db.Integer, db.ForeignKey("categorias.id"), nullable=False)
+    estoque = db.Column(db.Float, default=0)
+    disponivel = db.Column(db.Boolean, default=True)
 
-    estoque = db.Column(db.Integer, default=0)
-    imagens = db.Column(JSON)  # lista de URLs
-    tags = db.Column(db.String(255))  # orgânico, artesanal, etc.
+    # Sazonalidade
+    inicio_sazonal = db.Column(db.Date)
+    fim_sazonal = db.Column(db.Date)
 
-    itens_pedido = db.relationship("ItemPedido", backref="produto", lazy=True)
+    # Promoções
+    promocao = db.Column(db.Boolean, default=False)
+    preco_promocional = db.Column(db.Float)
 
-    def __repr__(self):
-        return f"<Produto {self.nome}>"
+    # Tags (orgânico, artesanal etc.)
+    tags = db.Column(db.String(200))
+
+    # Chaves estrangeiras
+    categoria_id = db.Column(db.Integer, db.ForeignKey("categoria.id"))
+    produtor_id = db.Column(db.Integer, db.ForeignKey("produtor.id"))
+
+    categoria = db.relationship("Categoria", back_populates="produtos")
+    produtor = db.relationship("Produtor", back_populates="produtos")
+    imagens = db.relationship("ImagemProduto", back_populates="produto", lazy=True)
+
+    itens = db.relationship("ItemPedido", back_populates="produto")  # histórico de vendas

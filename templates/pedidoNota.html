@@ -1,0 +1,18 @@
+<h2>Comprovante de Pedido #{{ pedido.id }}</h2>
+
+<p><strong>Cliente:</strong> {{ pedido.cliente.nome }}</p>
+<p><strong>Data:</strong> {{ pedido.data }}</p>
+<p><strong>Status:</strong> {{ pedido.status }}</p>
+
+<table>
+<tr><th>Produto</th><th>Qtd</th><th>Valor</th></tr>
+{% for item in pedido.itens %}
+<tr>
+  <td>{{ item.produto.nome }}</td>
+  <td>{{ item.quantidade }}</td>
+  <td>R$ {{ item.quantidade * item.preco_unitario }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>Total: R$ {{ pedido.total }}</h3>

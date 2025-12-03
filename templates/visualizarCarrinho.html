@@ -1,0 +1,29 @@
+<h2>Seu Carrinho</h2>
+
+<table>
+  <tr>
+    <th>Produto</th>
+    <th>Quantidade</th>
+    <th>Preço</th>
+    <th>Total</th>
+    <th></th>
+  </tr>
+
+  {% for id, item in carrinho.items() %}
+  <tr>
+    <td>{{ item.nome }}</td>
+    <td>
+      <form action="/carrinho/editar/{{ id }}" method="post">
+        <input type="number" name="quantidade" value="{{ item.quantidade }}" step="0.1">
+        <button type="submit">Atualizar</button>
+      </form>
+    </td>
+    <td>R$ {{ item.preco }}</td>
+    <td>R$ {{ item.preco * item.quantidade }}</td>
+    <td><a href="/carrinho/remover/{{ id }}">Remover</a></td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h3>Total: R$ {{ total }}</h3>
+<a href="/pedidos/checkout">Finalizar Pedido</a>

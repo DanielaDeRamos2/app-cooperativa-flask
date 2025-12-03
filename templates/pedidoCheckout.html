@@ -1,0 +1,27 @@
+<h2>Finalizar Pedido</h2>
+
+<form method="POST">
+
+  <label>Forma de Pagamento</label>
+  <select name="forma_pagamento">
+    <option value="dinheiro">Dinheiro</option>
+    <option value="pix">PIX</option>
+    <option value="cartao">Cartão na entrega</option>
+  </select>
+
+  <label>Recebimento</label>
+  <select name="tipo_recebimento">
+    <option value="retirada">Retirada</option>
+    <option value="entrega">Entrega</option>
+  </select>
+
+  <label>Data Agendada</label>
+  <input type="datetime-local" name="data_agendada">
+
+  <label>Observações</label>
+  <textarea name="observacoes"></textarea>
+
+  <button type="submit">Confirmar Pedido</button>
+</form>
+
+<h3>Total: R$ {{ total }}</h3>

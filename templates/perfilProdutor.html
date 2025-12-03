@@ -1,0 +1,18 @@
+<h1>{{ produtor.nome }}</h1>
+<p>{{ produtor.descricao }}</p>
+<p><strong>Endereço:</strong> {{ produtor.endereco }}</p>
+
+<h3>Certificações:</h3>
+<p>{{ produtor.certificacoes }}</p>
+
+<h3>Categorias:</h3>
+<ul>
+{% for c in produtor.categorias %}
+    <li>{{ c.nome }}</li>
+{% endfor %}
+</ul>
+
+<h3>Fotos:</h3>
+{% for f in produtor.fotos %}
+    <img src="/static/uploads/produtores/{{ f.imagem }}" width="200">
+{% endfor %}
