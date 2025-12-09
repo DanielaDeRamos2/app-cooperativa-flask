@@ -8,6 +8,7 @@ produtor_categoria = db.Table(
 )
 
 class Produtor(db.Model):
+    __tablename__ = "produtor"
     id = db.Column(db.Integer, primary_key=True)
     usuario_id = db.Column(db.Integer, db.ForeignKey("usuario.id"), unique=True)
 

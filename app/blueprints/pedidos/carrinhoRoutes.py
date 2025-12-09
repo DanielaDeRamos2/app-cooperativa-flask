@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.controllers.carrinho_controller import (
+from app.controllers.carrinhoController import (
     adicionar_item, remover_item, editar_quantidade,
     obter_carrinho, calcular_total
 )

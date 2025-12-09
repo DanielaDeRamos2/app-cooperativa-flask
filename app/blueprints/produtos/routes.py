@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
-from app.controllers.produto_controller import (
+from app.controllers.produtoController import (
     criar_produto,
     atualizar_produto,
     buscar_produtos

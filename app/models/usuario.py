@@ -10,11 +10,16 @@ class TipoUsuario(enum.Enum):
     VISITANTE = "Visitante"
 
 class Usuario(UserMixin, db.Model):
+    __tablename__ = "usuario"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)
     tipo_usuario = db.Column(db.Enum(TipoUsuario), default=TipoUsuario.VISITANTE)
     ativo = db.Column(db.Boolean, default=True)
+    
+    # Recuperação de senha
+    reset_token = db.Column(db.String(255), unique=True)
+    reset_token_timestamp = db.Column(db.DateTime)
 
     # relacionamento com cliente e produtor
     produtor = db.relationship("Produtor", back_populates="usuario", uselist=False)
@@ -29,3 +34,4 @@ class Usuario(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(id):
     return Usuario.query.get(int(id))
+

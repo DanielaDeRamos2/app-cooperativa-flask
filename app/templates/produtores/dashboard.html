@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Área do Produtor</h2>
+<ul>
+  <li>Resumo de vendas: {{ vendas_produtor }}</li>
+  <li>Meus produtos: {{ meus_produtos }}</li>
+  <li>Estoque: {{ estoque }}</li>
+  <li>Pedidos com meus produtos: {{ pedidos_produtor }}</li>
+</ul>
+{% endblock %}

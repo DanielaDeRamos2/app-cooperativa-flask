@@ -1,6 +1,6 @@
 from app import db
 from app.models.produto import Produto
-from app.models.imagem_produto import ImagemProduto
+from app.models.foto_produto import ImagemProduto
 from werkzeug.utils import secure_filename
 import os
 

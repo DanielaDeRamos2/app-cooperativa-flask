@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }} - CoopVale{% endblock %}
+
+{% block extra_css %}
+<style>
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    h1 { color: #2D7F43; margin-bottom: 20px; }
+    .construction-message { background: linear-gradient(135deg, #2D7F43, #FFC107); color: white; padding: 40px; border-radius: 8px; text-align: center; }
+    .construction-icon { font-size: 3rem; margin-bottom: 15px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ titulo }}</h1>
+    <div class="construction-message">
+        <div class="construction-icon"><i class="fas fa-tools"></i></div>
+        <h2>Página em Desenvolvimento</h2>
+        <p>Estamos preparando o melhor conteúdo para você. Em breve, você poderá explorar produtos nesta categoria!</p>
+    </div>
+</div>
+{% endblock %}

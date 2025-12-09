@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from app.controllers.pedido_controller import criar_pedido
-from app.controllers.carrinho_controller import obter_carrinho, calcular_total
+from app.controllers.pedidoController import criar_pedido
+from app.controllers.carrinhoController import obter_carrinho, calcular_total
 from datetime import datetime
 
 pedidos_bp = Blueprint("pedidos", __name__, url_prefix="/pedidos")

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Novo Produto</h2>
+<form method="post">
+  <label>Nome:</label><input type="text" name="nome"><br>
+  <label>Preço:</label><input type="number" name="preco" step="0.01"><br>
+  <label>Categoria:</label>
+  <select name="categoria">
+    {% for cat in categorias %}<option value="{{ cat.id }}">{{ cat.nome }}</option>{% endfor %}
+  </select><br>
+  <button type="submit">Salvar</button>
+</form>
+{% endblock %}

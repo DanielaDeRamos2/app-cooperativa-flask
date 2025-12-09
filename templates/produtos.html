@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }} - CoopVale</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; color: #333; }
+        
+        header { background: #2D7F43; color: white; padding: 20px; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; }
+        nav a:hover { text-decoration: underline; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #2D7F43; margin-bottom: 20px; }
+        
+        .filters { background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        .filters input, .filters select { padding: 8px; margin-right: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .filters button { background: #2D7F43; color: white; padding: 8px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; transition: 0.3s; }
+        .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .product-card h3 { color: #2D7F43; margin-bottom: 10px; }
+        .product-card .price { font-size: 1.3em; color: #2D7F43; font-weight: bold; margin: 10px 0; }
+        .product-card a { background: #FFC107; color: #333; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block; }
+        
+        footer { background: #2D7F43; color: white; padding: 30px 20px; text-align: center; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div style="font-weight: bold; font-size: 1.5em;">🌾 CoopVale</div>
+            <div>
+                <a href="/">Início</a>
+                <a href="/produtos">Produtos</a>
+                <a href="/sobre">Sobre</a>
+                <a href="/faq">FAQ</a>
+                <a href="/contato">Contato</a>
+            </div>
+            <div>
+                <a href="/login">Login</a>
+                <a href="/cadastrar">Cadastro</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>{{ titulo }}</h1>
+        
+        <div class="filters">
+            <form method="get" style="display: flex; gap: 10px;">
+                <input type="text" name="q" placeholder="Buscar produtos...">
+                <select name="categoria">
+                    <option value="">Todas categorias</option>
+                    <option value="hortifruti">Hortifruti</option>
+                    <option value="laticinios">Laticínios</option>
+                    <option value="acougue">Açougue</option>
+                    <option value="panificacao">Panificação</option>
+                    <option value="artesanal">Artesanal</option>
+                </select>
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+
+        <div class="products-grid">
+            {% for produto in produtos %}
+            <div class="product-card">
+                <h3>{{ produto.nome }}</h3>
+                <div class="price">R$ {{ "%.2f"|format(produto.preco) }}</div>
+                <a href="#">Ver Detalhes</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 CoopVale - Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

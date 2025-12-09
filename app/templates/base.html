@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CoopVale - Cooperativa Digital{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232D7F43' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' fill='%23FFC107' text-anchor='middle'>C</text></svg>">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('home') }}" class="navbar-brand">
+                <i class="fas fa-leaf navbar-brand-icon"></i>
+                CoopVale
+            </a>
+            
+            <ul class="navbar-menu">
+                 <li><a href="{{ url_for('home') }}">Início</a></li>
+                 <li><a href="{{ url_for('produtos') }}">Produtos</a></li>
+                 <li><a href="{{ url_for('sobre') }}">Sobre</a></li>
+                 <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                 <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="/pedidos/">Pedidos</a></li>
+                {% endif %}
+            </ul>
+            
+            <div class="navbar-right">
+                <!-- Carrinho -->
+                <a href="/carrinho/" class="navbar-cart" title="Meu Carrinho">
+                    <i class="fas fa-shopping-cart"></i>
+                    {% if session.get('cart', {})|length > 0 %}
+                        <span class="navbar-cart-badge">{{ session.get('cart', {})|length }}</span>
+                    {% endif %}
+                </a>
+                
+                <!-- Usuário -->
+                {% if current_user.is_authenticated %}
+                    <div class="navbar-user">
+                        <div class="navbar-user-avatar">
+                            {{ current_user.email[0]|upper }}
+                        </div>
+                        <div>
+                            <div style="font-size: 0.9rem; font-weight: 600;">{{ current_user.email }}</div>
+                            <div style="font-size: 0.75rem;">
+                                {% if current_user.tipo_usuario.value == 'Administrador' %}
+                                    <a href="/admin/pedidos/" style="color: var(--accent-color);">Admin</a>
+                                {% elif current_user.tipo_usuario.value == 'Produtor' %}
+                                    <a href="/produtores/" style="color: var(--accent-color);">Produtor</a>
+                                {% else %}
+                                    Cliente
+                                {% endif %}
+                            </div>
+                        </div>
+                        <a href="{{ url_for('auth.logout') }}" title="Sair" style="margin-left: 1rem; color: white; font-size: 1.1rem; transition: color 0.3s;">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-accent btn-small">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- ALERTAS -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container" style="margin-top: 1.5rem;">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' if category == 'danger' else 'warning' if category == 'warning' else 'info' }}">
+                        <span class="alert-icon">
+                            {% if category == 'success' %}<i class="fas fa-check-circle"></i>
+                            {% elif category == 'danger' %}<i class="fas fa-exclamation-circle"></i>
+                            {% elif category == 'warning' %}<i class="fas fa-exclamation-triangle"></i>
+                            {% else %}<i class="fas fa-info-circle"></i>
+                            {% endif %}
+                        </span>
+                        <div>{{ message }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main style="min-height: calc(100vh - 200px);">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Sobre CoopVale</h4>
+                <p>Somos uma plataforma digital que conecta produtores locais com consumidores que valorizam qualidade, sustentabilidade e comércio justo.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Links Úteis</h4>
+                <ul>
+                        <li><a href="/">Início</a></li>
+                        <li><a href="/produtos">Produtos</a></li>
+                        <li><a href="/sobre">Sobre</a></li>
+                        <li><a href="/faq">FAQ</a></li>
+                        <li><a href="/contato">Contato</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:contato@coopvale.com.br">contato@coopvale.com.br</a></li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+5511987654321">(11) 98765-4321</a></li>
+                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Redes Sociais</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 CoopVale. Todos os direitos reservados. | <a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar - CoopVale{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 50px auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <h2 style="color: #2D7F43; text-align: center; margin-bottom: 30px;">📝 Criar Conta</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div style="margin-bottom: 20px;">
+            {% for category, message in messages %}
+            <div style="padding: 12px; border-radius: 5px; margin-bottom: 10px; background: {% if category == 'danger' %}#f8d7da{% else %}#d4edda{% endif %}; color: {% if category == 'danger' %}#721c24{% else %}#155724{% endif %}; border: 1px solid {% if category == 'danger' %}#f5c6cb{% else %}#c3e6cb{% endif %};">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+    
+    <form method="POST" action="{{ url_for('auth.register') }}" onsubmit="return validarSenhas()">
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #2D7F43;">📧 Email:</label>
+            <input type="email" name="email" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="seu@email.com" required>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #2D7F43;">👤 Tipo de Usuário:</label>
+            <select name="tipo_usuario" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                <option value="">-- Selecione --</option>
+                <option value="Cliente">👤 Cliente</option>
+                <option value="Produtor">🌾 Produtor</option>
+            </select>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #2D7F43;">🔐 Senha:</label>
+            <input type="password" name="senha" id="senha" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="Mínimo 6 caracteres" required>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #2D7F43;">🔐 Confirmar Senha:</label>
+            <input type="password" name="confirmar_senha" id="confirmar_senha" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="Repita a senha" required>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <input type="checkbox" id="terms" required>
+            <label for="terms" style="display: inline; font-weight: normal;">Concordo com os <a href="/sobre" style="color: #2D7F43;">Termos de Uso</a></label>
+        </div>
+        
+        <button type="submit" style="width: 100%; background: #2D7F43; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; font-weight: bold;">Criar Conta</button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        Já tem conta? <a href="{{ url_for('auth.login') }}" style="color: #2D7F43; font-weight: bold;">Faça login</a>
+    </div>
+</div>
+
+<script>
+function validarSenhas() {
+    const senha = document.getElementById('senha').value;
+    const confirmar = document.getElementById('confirmar_senha').value;
+    
+    if (senha !== confirmar) {
+        alert('As senhas não conferem!');
+        return false;
+    }
+    
+    if (senha.length < 6) {
+        alert('A senha deve ter no mínimo 6 caracteres!');
+        return false;
+    }
+    
+    return true;
+}
+</script>
+{% endblock %}

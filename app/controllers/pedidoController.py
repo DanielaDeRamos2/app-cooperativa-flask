@@ -1,7 +1,7 @@
 from app import db
 from app.models.pedido import Pedido
 from app.models.item_pedido import ItemPedido
-from .carrinho_controller import obter_carrinho, calcular_total
+from app.controllers.carrinhoController import obter_carrinho, calcular_total
 from datetime import datetime
 
 def criar_pedido(cliente_id, dados):

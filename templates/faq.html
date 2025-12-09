@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }} - CoopVale</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; color: #333; }
+        
+        header { background: #2D7F43; color: white; padding: 20px; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; }
+        nav a:hover { text-decoration: underline; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #2D7F43; margin-bottom: 30px; }
+        
+        .faq-item { background: white; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .faq-question { background: #2D7F43; color: white; padding: 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .faq-question:hover { background: #1f5a2e; }
+        .faq-answer { background: #f9f9f9; padding: 15px; display: none; line-height: 1.6; }
+        .faq-item.active .faq-answer { display: block; }
+        .toggle-icon { font-size: 1.2em; }
+        
+        footer { background: #2D7F43; color: white; padding: 30px 20px; text-align: center; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div style="font-weight: bold; font-size: 1.5em;">🌾 CoopVale</div>
+            <div>
+                <a href="/">Início</a>
+                <a href="/produtos">Produtos</a>
+                <a href="/sobre">Sobre</a>
+                <a href="/faq">FAQ</a>
+                <a href="/contato">Contato</a>
+            </div>
+            <div>
+                <a href="/login">Login</a>
+                <a href="/cadastrar">Cadastro</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>{{ titulo }}</h1>
+        
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Como faço para comprar na CoopVale?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Para começar, crie uma conta clicando em "Cadastro". Após preencher seus dados, você terá acesso ao catálogo completo de produtos. Selecione os itens desejados, adicione ao carrinho e finalize a compra escolhendo a forma de pagamento e local de retirada.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Quais são as formas de pagamento?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Oferecemos as seguintes formas de pagamento: Dinheiro (na retirada), PIX (na retirada), Cartão na Entrega. Todas as transações são seguras e rastreadas.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Como funciona a retirada ou entrega?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Você pode escolher entre retirar no ponto de retirada mais próximo (sede da cooperativa, feiras, pontos parceiros) ou optar pela entrega em casa. No checkout, selecione a opção desejada e agende a data que melhor lhe convém.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Os produtos são frescos?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Sim! Todos os nossos produtos são entregues frescos, direto dos produtores para você. Colhemos e preparamos os itens após confirmação do seu pedido, garantindo máxima frescura.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Posso devolver um produto?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Se receber um produto com defeito ou que não corresponda ao pedido, entre em contato conosco em até 24 horas. Faremos a troca ou reembolso imediatamente.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Como acompanho meu pedido?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Após confirmar o pedido, você receberá atualizações por email sobre o status. Você também pode acompanhar em tempo real na seção "Meus Pedidos" da sua conta.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Vocês vendem produtos orgânicos?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Muitos dos nossos produtores trabalham com práticas sustentáveis e possuem certificações (orgânico, boas práticas, sem agrotóxico). Essas informações aparecem na descrição de cada produto.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Qual é o valor mínimo do pedido?</span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Não há valor mínimo de pedido, mas algumas categorias podem ter quantidade mínima. Essa informação é exibida no catálogo de produtos.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 CoopVale - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+                const icon = question.querySelector('.toggle-icon');
+                icon.textContent = item.classList.contains('active') ? '−' : '+';
+            });
+        });
+    </script>
+</body>
+</html>

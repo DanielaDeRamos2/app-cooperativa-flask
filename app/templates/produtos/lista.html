@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Produtos</h2>
+<ul>
+  {% for prod in produtos %}
+    <li>{{ prod.nome }} - {{ prod.preco }} <a href="/produtos/editar/{{ prod.id }}">Editar</a></li>
+  {% endfor %}
+</ul>
+<a href="/produtos/novo">Novo Produto</a>
+{% endblock %}

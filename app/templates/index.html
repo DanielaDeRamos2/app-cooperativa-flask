@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }} - CoopVale{% endblock %}
+
+{% block extra_css %}
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; color: #333; }
+    .hero { background: linear-gradient(135deg, #2D7F43, #FFC107); color: white; padding: 60px 20px; text-align: center; }
+    .hero h1 { font-size: 2.5em; margin-bottom: 10px; }
+    .hero p { font-size: 1.2em; margin-bottom: 20px; }
+    .hero a { background: white; color: #2D7F43; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    h2 { margin: 40px 0 20px; color: #2D7F43; }
+    .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 40px; }
+    .category-card { background: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center; cursor: pointer; transition: 0.3s; }
+    .category-card:hover { background: #e0f2e0; transform: translateY(-5px); }
+    .category-card a { text-decoration: none; color: #2D7F43; font-weight: bold; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; transition: 0.3s; }
+    .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); transform: translateY(-5px); }
+    .product-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
+    .product-name { font-weight: bold; color: #333; margin-bottom: 5px; }
+    .product-price { color: #2D7F43; font-size: 1.2em; font-weight: bold; margin-bottom: 10px; }
+    .product-card a { background: #FFC107; color: #333; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    .info-section { background: #f9f9f9; padding: 30px; border-radius: 8px; margin-bottom: 40px; }
+    .info-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .info-card { background: white; padding: 20px; border-radius: 8px; text-align: center; }
+    .info-card h3 { color: #2D7F43; margin-bottom: 10px; }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Bem-vindo à CoopVale</h1>
+        <p>Produtos frescos e artesanais direto dos produtores da região</p>
+        <a href="/produtos">Explore Nossos Produtos</a>
+    </section>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="container">
+        <!-- CATEGORIAS -->
+        <h2><i class="fas fa-store"></i> Categorias de Produtos</h2>
+        <div class="categories">
+            <div class="category-card">
+                <i class="fas fa-leaf" style="font-size: 2.5rem; margin-bottom: 10px; color: #2D7F43;"></i>
+                <a href="/produtos?categoria=1">Hortifruti</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-cheese" style="font-size: 2.5rem; margin-bottom: 10px; color: #2D7F43;"></i>
+                <a href="/produtos?categoria=2">Laticínios</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-drumstick-bite" style="font-size: 2.5rem; margin-bottom: 10px; color: #2D7F43;"></i>
+                <a href="/produtos?categoria=3">Açougue</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-bread-slice" style="font-size: 2.5rem; margin-bottom: 10px; color: #2D7F43;"></i>
+                <a href="/produtos?categoria=4">Panificação</a>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-palette" style="font-size: 2.5rem; margin-bottom: 10px; color: #2D7F43;"></i>
+                <a href="/produtos?categoria=5">Artesanal</a>
+            </div>
+        </div>
+
+        <!-- PRODUTOS EM DESTAQUE -->
+        <h2><i class="fas fa-star"></i> Produtos em Destaque</h2>
+        <div class="products">
+            <div class="product-card">
+                <div style="background: #e0f2e0; height: 150px; border-radius: 5px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-carrot" style="font-size: 3rem; color: #ff9500;"></i></div>
+                <div class="product-name">Cenoura Fresca</div>
+                <div class="product-price">R$ 5,99 / kg</div>
+                <a href="#">Ver Detalhes</a>
+            </div>
+            <div class="product-card">
+                <div style="background: #fff8e0; height: 150px; border-radius: 5px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-cheese" style="font-size: 3rem; color: #ffc107;"></i></div>
+                <div class="product-name">Queijo Artesanal</div>
+                <div class="product-price">R$ 28,50 / 500g</div>
+                <a href="#">Ver Detalhes</a>
+            </div>
+            <div class="product-card">
+                <div style="background: #ffe0e0; height: 150px; border-radius: 5px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-drumstick-bite" style="font-size: 3rem; color: #d32f2f;"></i></div>
+                <div class="product-name">Carne Bovina Premium</div>
+                <div class="product-price">R$ 42,90 / kg</div>
+                <a href="#">Ver Detalhes</a>
+            </div>
+            <div class="product-card">
+                <div style="background: #f0e0ff; height: 150px; border-radius: 5px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-bread-slice" style="font-size: 3rem; color: #8b6f47;"></i></div>
+                <div class="product-name">Pão Integral</div>
+                <div class="product-price">R$ 8,50 / un</div>
+                <a href="#">Ver Detalhes</a>
+            </div>
+        </div>
+
+        <!-- INFORMAÇÕES -->
+        <h2><i class="fas fa-lightbulb"></i> Por Que Escolher CoopVale?</h2>
+        <div class="info-section">
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3><i class="fas fa-sprout"></i> 100% Fresco</h3>
+                    <p>Produtos direto dos produtores para sua mesa</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-handshake"></i> Comércio Justo</h3>
+                    <p>Apoiamos 45 produtores rurais da região</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-truck"></i> Entrega Rápida</h3>
+                    <p>Retirada em pontos ou entrega em casa</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-leaf"></i> Sustentável</h3>
+                    <p>Compromisso com a sustentabilidade local</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA SECTION -->
+        <div style="background: #2D7F43; color: white; padding: 40px; border-radius: 8px; text-align: center;">
+            <h2>Pronto para Começar?</h2>
+            <p style="margin: 15px 0; font-size: 1.1em;">Cadastre-se e receba 10% de desconto na primeira compra</p>
+            <a href="/auth/register" style="background: #FFC107; color: #333; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Cadastre-se Agora</a>
+        </div>
+    </div>
+{% endblock %}
