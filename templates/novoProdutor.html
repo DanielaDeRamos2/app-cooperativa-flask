@@ -1,19 +1,45 @@
-<form method="POST" enctype="multipart/form-data">
-    <input type="text" name="nome" placeholder="Nome completo" required>
-    <input type="text" name="cpf" placeholder="CPF" required>
-    <input type="text" name="telefone" placeholder="Telefone" required>
-    <input type="email" name="email" placeholder="E-mail" required>
-    <textarea name="endereco" placeholder="Endereço"></textarea>
-    <textarea name="certificacoes" placeholder="Certificações"></textarea>
-    <textarea name="descricao" placeholder="Descrição da propriedade"></textarea>
+{% extends 'base.html' %}
 
-    <label>Categorias</label>
-    {% for c in categorias %}
-        <input type="checkbox" name="categorias" value="{{ c.id }}"> {{ c.nome }}<br>
-    {% endfor %}
+{% block title %}Novo Produtor{% endblock %}
 
-    <label>Fotos</label>
-    <input type="file" name="fotos" multiple>
+{% block content %}
+<div class="container page-card">
+    <h1 class="page-title">Novo Produtor</h1>
+    <form method="POST" enctype="multipart/form-data" class="form-grid">
+        <label class="form-label">Nome completo</label>
+        <input class="form-control" type="text" name="nome" placeholder="Nome completo" required>
 
-    <button type="submit">Salvar</button>
-</form>
+        <label class="form-label">CPF</label>
+        <input class="form-control" type="text" name="cpf" placeholder="CPF" required>
+
+        <label class="form-label">Telefone</label>
+        <input class="form-control" type="text" name="telefone" placeholder="Telefone" required>
+
+        <label class="form-label">E-mail</label>
+        <input class="form-control" type="email" name="email" placeholder="E-mail" required>
+
+        <label class="form-label">Endereço</label>
+        <textarea class="form-control" name="endereco" placeholder="Endereço"></textarea>
+
+        <label class="form-label">Certificações</label>
+        <textarea class="form-control" name="certificacoes" placeholder="Certificações"></textarea>
+
+        <label class="form-label">Descrição da propriedade</label>
+        <textarea class="form-control" name="descricao" placeholder="Descrição da propriedade"></textarea>
+
+        <label class="form-label">Categorias</label>
+        <div class="form-check">
+            {% for c in categorias %}
+                <label><input type="checkbox" name="categorias" value="{{ c.id }}"> {{ c.nome }}</label>
+            {% endfor %}
+        </div>
+
+        <label class="form-label">Fotos</label>
+        <input class="form-control" type="file" name="fotos" multiple>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Salvar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -2,8 +2,10 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app.controllers.produtorController import (
     criar_produtor,
+    atualizar_produtor,
     atualizar_status_produtor,
-    obter_historico_vendas
+    obter_historico_vendas,
+    deletar_produtor
 )
 from app.models.categoria import Categoria
 from app.models.produtor import Produtor
@@ -67,3 +69,44 @@ def perfil(id):
 def lista():
     produtores = Produtor.query.all()
     return render_template("produtores/lista.html", produtores=produtores)
+
+
+@produtores_bp.route('/excluir/<int:id>', methods=['POST'])
+@login_required
+@require_role('Administrador')
+def excluir(id):
+    ok, msg = deletar_produtor(id)
+    if ok:
+        flash(msg, 'success')
+    else:
+        flash(msg, 'danger')
+    return redirect(url_for('produtores.lista'))
+
+
+
+@produtores_bp.route('/editar/<int:id>', methods=['GET', 'POST'])
+@login_required
+@require_role('Administrador')
+def editar(id):
+    produtor = Produtor.query.get_or_404(id)
+    categorias = Categoria.query.all()
+
+    if request.method == 'POST':
+        dados = {
+            "nome": request.form["nome"],
+            "cpf": request.form["cpf"],
+            "telefone": request.form["telefone"],
+            "email": request.form["email"],
+            "endereco": request.form["endereco"],
+            "certificacoes": request.form.get("certificacoes", ""),
+            "descricao": request.form.get("descricao", ""),
+            "categorias": request.form.getlist("categorias")
+        }
+
+        imagens = request.files.getlist("fotos")
+
+        atualizar_produtor(id, dados, imagens)
+        flash("Produtor atualizado com sucesso.")
+        return redirect(url_for('produtores.lista'))
+
+    return render_template('produtores/novo.html', categorias=categorias, produtor=produtor)

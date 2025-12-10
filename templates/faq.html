@@ -4,27 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ titulo }} - CoopVale</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; color: #333; }
-        
-        header { background: #2D7F43; color: white; padding: 20px; }
-        nav { display: flex; justify-content: space-between; align-items: center; }
-        nav a { color: white; text-decoration: none; margin: 0 15px; }
-        nav a:hover { text-decoration: underline; }
-        
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        h1 { color: #2D7F43; margin-bottom: 30px; }
-        
-        .faq-item { background: white; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
-        .faq-question { background: #2D7F43; color: white; padding: 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
-        .faq-question:hover { background: #1f5a2e; }
-        .faq-answer { background: #f9f9f9; padding: 15px; display: none; line-height: 1.6; }
-        .faq-item.active .faq-answer { display: block; }
-        .toggle-icon { font-size: 1.2em; }
-        
-        footer { background: #2D7F43; color: white; padding: 30px 20px; text-align: center; margin-top: 40px; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
 </head>
 <body>
     <header>

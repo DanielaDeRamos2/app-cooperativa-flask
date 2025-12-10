@@ -1,37 +1,43 @@
-<h2>Pedidos – {{ status }}</h2>
+{% extends 'base.html' %}
 
-<form method="GET">
-  <select name="status" onchange="this.form.submit()">
-    <option>Aguardando confirmação</option>
-    <option>Em preparação</option>
-    <option>Pronto para retirada/entrega</option>
-    <option>Concluído</option>
-    <option>Cancelado</option>
-  </select>
-</form>
+{% block title %}Pedidos – {{ status }}{% endblock %}
 
-<table>
-<tr><th>ID</th><th>Cliente</th><th>Total</th><th>Ações</th></tr>
+{% block content %}
+<div class="container page-card">
+  <h1 class="page-title">Pedidos – {{ status }}</h1>
 
-{% for p in pedidos %}
-<tr>
-  <td>{{ p.id }}</td>
-  <td>{{ p.cliente.nome }}</td>
-  <td>R$ {{ p.total }}</td>
-  <td>
-    <form action="/admin/pedidos/status/{{ p.id }}" method="post">
-      <select name="status">
-        <option value="Aguardando confirmação">Aguardando</option>
-        <option value="Em preparação">Preparando</option>
-        <option value="Pronto para retirada/entrega">Pronto</option>
-        <option value="Concluído">Concluído</option>
-        <option value="Cancelado">Cancelar</option>
-      </select>
-      <button>OK</button>
-    </form>
+  <form method="GET" class="inline-form mb-16">
+    <select class="form-control" name="status" onchange="this.form.submit()">
+      <option>Aguardando confirmação</option>
+      <option>Em preparação</option>
+      <option>Pronto para retirada/entrega</option>
+      <option>Concluído</option>
+      <option>Cancelado</option>
+    </select>
+  </form>
 
-    <a href="/admin/pedidos/divisao/{{ p.id }}">Ver divisão</a>
-  </td>
-</tr>
-{% endfor %}
-</table>
+  <div class="table-like">
+    <div class="table-row table-head"><div>ID</div><div>Cliente</div><div>Total</div><div>Ações</div></div>
+    {% for p in pedidos %}
+    <div class="table-row">
+      <div>{{ p.id }}</div>
+      <div>{{ p.cliente.nome }}</div>
+      <div>R$ {{ p.total }}</div>
+      <div>
+        <form action="/admin/pedidos/status/{{ p.id }}" method="post" class="inline-form">
+          <select class="form-control" name="status">
+            <option value="Aguardando confirmação">Aguardando</option>
+            <option value="Em preparação">Preparando</option>
+            <option value="Pronto para retirada/entrega">Pronto</option>
+            <option value="Concluído">Concluído</option>
+            <option value="Cancelado">Cancelar</option>
+          </select>
+          <button class="btn btn-secondary" type="submit">OK</button>
+        </form>
+        <a class="btn btn-ghost" href="/admin/pedidos/divisao/{{ p.id }}">Ver divisão</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

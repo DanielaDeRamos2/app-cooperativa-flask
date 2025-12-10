@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ produto.nome }}{% endblock %}
+
+{% block content %}
+<div class="container page-card product-detail">
+  <div class="product-grid">
+    <div class="product-images">
+      {% if produto.imagens and produto.imagens|length > 0 %}
+        <div class="gallery">
+          {% for img in produto.imagens %}
+            <div class="gallery-item">
+              <img src="/static/uploads/produtos/{{ img.caminho }}" alt="{{ produto.nome }}">
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="no-image">Sem imagem</div>
+      {% endif %}
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">{{ produto.nome }}</h1>
+      <div class="product-meta">
+        <div class="price">R$ {{ produto.preco }} {% if produto.promocao and produto.preco_promocional %}<span class="price-old">R$ {{ produto.preco_promocional }}</span>{% endif %}</div>
+        <div class="unit">Unidade: {{ produto.unidade }}</div>
+        <div class="stock">Estoque: {{ produto.estoque }}</div>
+      </div>
+
+      <p class="product-description">{{ produto.descricao }}</p>
+
+      <div class="product-actions">
+        <form action="/carrinho/adicionar/{{ produto.id }}" method="post" class="inline-form">
+          <label class="form-label">Quantidade</label>
+          <input class="form-control" type="number" name="quantidade" value="1" step="0.1" min="0.1">
+          <button class="btn btn-primary" type="submit">Adicionar ao Carrinho</button>
+        </form>
+
+        <div style="margin-top:12px;">
+          <a class="btn btn-ghost" href="/produtores/perfil/{{ produto.produtor.id }}">Ver Produtor</a>
+        </div>
+      </div>
+
+      <div class="product-tags" style="margin-top:12px;">
+        {% if produto.tags %}
+          <strong>Tags:</strong>
+          {% for t in produto.tags.split(',') %}
+            <span class="chip">{{ t }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

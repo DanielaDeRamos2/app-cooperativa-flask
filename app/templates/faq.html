@@ -1,9 +1,431 @@
 {% extends 'base.html' %}
+
+{% block title %}Perguntas Frequentes - CoopVale{% endblock %}
+
+{% block extra_css %}
+<style>
+    .faq-hero {
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+        color: white;
+        padding: 80px 20px;
+        text-align: center;
+    }
+
+    .faq-hero h1 {
+        color: white;
+        margin-bottom: 12px;
+    }
+
+    .faq-hero p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+    }
+
+    .faq-content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 80px 20px;
+    }
+
+    .faq-tabs {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .faq-tab {
+        padding: 10px 20px;
+        border: 2px solid var(--border);
+        background: var(--surface);
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--text);
+        transition: var(--transition);
+        font-size: 0.95rem;
+    }
+
+    .faq-tab:hover,
+    .faq-tab.active {
+        background: var(--primary-green);
+        color: white;
+        border-color: var(--primary-green);
+    }
+
+    .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .faq-item {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+    }
+
+    .faq-item:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-green);
+    }
+
+    .faq-question {
+        padding: 20px;
+        background: var(--surface);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        transition: var(--transition);
+        font-weight: 600;
+        color: var(--primary-green);
+    }
+
+    .faq-question:hover {
+        background: var(--light);
+    }
+
+    .faq-icon {
+        font-size: 1.5rem;
+        color: var(--primary-green);
+        transition: var(--transition);
+        flex-shrink: 0;
+    }
+
+    .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        background: var(--light);
+    }
+
+    .faq-item.active .faq-answer {
+        max-height: 500px;
+    }
+
+    .faq-answer-content {
+        padding: 20px;
+        color: var(--text-light);
+        line-height: 1.8;
+    }
+
+    .faq-search {
+        max-width: 500px;
+        margin: 0 auto 40px;
+        position: relative;
+    }
+
+    .faq-search input {
+        width: 100%;
+        padding: 14px 16px 14px 40px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: var(--transition);
+    }
+
+    .faq-search input:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 0 0 4px rgba(45, 90, 61, 0.1);
+    }
+
+    .faq-search-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-light);
+        font-size: 1.2rem;
+        pointer-events: none;
+    }
+
+    .faq-category {
+        margin-bottom: 40px;
+    }
+
+    .faq-category-title {
+        color: var(--primary-green);
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid var(--accent-gold);
+    }
+
+    .faq-cta {
+        background: linear-gradient(135deg, rgba(45, 90, 61, 0.1), rgba(139, 111, 71, 0.1));
+        border: 2px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 40px 24px;
+        text-align: center;
+        margin-top: 60px;
+    }
+
+    .faq-cta h3 {
+        color: var(--primary-green);
+        margin-top: 0;
+    }
+
+    .faq-cta p {
+        color: var(--text-light);
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .faq-hero {
+            padding: 60px 20px;
+        }
+
+        .faq-content {
+            padding: 40px 20px;
+        }
+
+        .faq-tabs {
+            justify-content: flex-start;
+            overflow-x: auto;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<h2>FAQ</h2>
-<ul>
-  <li><b>Como comprar?</b> Cadastre-se, escolha produtos e finalize o pedido.</li>
-  <li><b>Quais formas de pagamento?</b> Dinheiro, PIX, cartão na entrega.</li>
-  <li><b>Como retirar?</b> Escolha um ponto de retirada ou entrega.</li>
-</ul>
+    <!-- Hero Section -->
+    <section class="faq-hero">
+        <h1>Perguntas Frequentes</h1>
+        <p>Encontre respostas para as dúvidas mais comuns sobre CoopVale</p>
+    </section>
+
+    <!-- Conteúdo -->
+    <div class="faq-content">
+        <!-- Busca -->
+        <div class="faq-search">
+            <span class="material-symbols-outlined faq-search-icon">search</span>
+            <input type="text" id="faqSearch" placeholder="Buscar pergunta..." onkeyup="filterFAQ()">
+        </div>
+
+        <!-- Compras -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">
+                <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">shopping_bag</span>
+                Como Comprar?
+            </h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Como me cadastro na CoopVale?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Clique em "Entrar" no canto superior direito e depois em "Criar conta". Preencha seus dados (nome, email e senha) e confirme seu email. Pronto! Você já pode começar a comprar.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Como adicionar produtos ao carrinho?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Navegue pela página de Produtos, escolha a quantidade desejada e clique em "Adicionar ao Carrinho". Você pode continuar comprando ou ir direto para checkout.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Preciso fazer meu cadastro para comprar?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Sim, o cadastro é obrigatório para que possamos garantir a entrega correta do seu pedido e manter contato com você. É rápido e gratuito!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagamento -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">
+                <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">payment</span>
+                Pagamento e Preços
+            </h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quais são as formas de pagamento?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Aceitamos: PIX (instantâneo), Cartão de Crédito/Débito (via gateway seguro) e Dinheiro na entrega. Todos os métodos possuem proteção para sua segurança.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Há taxa de entrega?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            A entrega é gratuita para pedidos acima de R$ 100 na região metropolitana. Pedidos menores têm taxa de R$ 10. Você verá o valor total antes de confirmar a compra.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Vocês oferecem desconto para primeira compra?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Sim! Clientes novos recebem 10% de desconto na primeira compra. O cupom é aplicado automaticamente ao finalizar o pedido.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Entrega -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">
+                <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">local_shipping</span>
+                Entrega e Retirada
+            </h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quanto tempo leva para entregar?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Entregamos em até 3 dias úteis na região metropolitana de São Paulo. Pedidos por PIX são processados em 24h. Você receberá um código de rastreamento por email.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Existe opção de retirada?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Sim! Oferecemos 5 pontos de retirada estratégicos. Na finalização do pedido, você escolhe o ponto mais próximo e retira em 24-48 horas.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Meu bairro não é coberto pela entrega?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Oferecemos entrega em vários bairros de São Paulo. Se o seu não aparecer, você pode usar nossos pontos de retirada ou <a href="/contato" style="color: var(--primary-green); font-weight: 600;">entrar em contato</a> para solicitar cobertura.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produtos -->
+        <div class="faq-category">
+            <h2 class="faq-category-title">
+                <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">eco</span>
+                Sobre os Produtos
+            </h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Os produtos são orgânicos?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Muitos dos nossos produtos são orgânicos ou cultivados com técnicas agroecológicas. Cada produtor segue suas práticas sustentáveis. Você pode verificar a descrição de cada produto para saber mais detalhes.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Como sei de qual produtor vem o produto?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Na página de cada produto, você encontra informações do produtor responsável. Você também pode acessar o perfil completo do produtor com sua história e produtos.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Qual é a garantia de frescor dos produtos?</span>
+                        <span class="material-symbols-outlined faq-icon">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Nossos produtos são colhidos diariamente e entregues em até 48 horas. Garantimos máxima frescura. Se você receber algum produto não conforme, entre em contato e fazemos a reposição.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="faq-cta">
+            <h3>Não encontrou o que procurava?</h3>
+            <p>Nossa equipe está disponível para responder suas dúvidas</p>
+            <a href="/contato" class="btn-primary" style="gap: 8px; display: inline-flex; align-items: center;">
+                <span class="material-symbols-outlined">mail</span>
+                Entre em Contato
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Expandir/Colapsar FAQ
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Filtro de busca
+        function filterFAQ() {
+            const search = document.getElementById('faqSearch').value.toLowerCase();
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+                if (question.includes(search) || answer.includes(search)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
 {% endblock %}

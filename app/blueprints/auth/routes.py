@@ -13,7 +13,7 @@ auth_bp = Blueprint("auth", __name__, url_prefix="/auth")
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("home"))
+        return redirect('/')
     
     if request.method == "POST":
         email = request.form.get("email", "").strip()
@@ -37,7 +37,7 @@ def register():
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("home"))
+        return redirect('/')
     
     if request.method == "POST":
         email = request.form.get("email", "").strip()
@@ -47,7 +47,7 @@ def login():
         if user:
             login_user(user, remember=request.form.get("remember_me"))
             next_page = request.args.get("next")
-            return redirect(next_page if next_page else url_for("home"))
+            return redirect(next_page if next_page else '/')
         
         flash("Email ou senha incorretos.", "danger")
     return render_template("auth/login.html")
@@ -64,7 +64,7 @@ def logout():
 @auth_bp.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
     if current_user.is_authenticated:
-        return redirect(url_for("home"))
+        return redirect('/')
     
     if request.method == "POST":
         email = request.form.get("email", "").strip()
@@ -78,7 +78,7 @@ def forgot_password():
 @auth_bp.route("/reset-password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     if current_user.is_authenticated:
-        return redirect(url_for("home"))
+        return redirect('/')
     
     if request.method == "POST":
         nova_senha = request.form.get("nova_senha", "")

@@ -1,45 +1,74 @@
-<form method="POST" enctype="multipart/form-data">
-    <input name="nome" placeholder="Nome" required>
-    <textarea name="descricao" placeholder="Descrição"></textarea>
-    <input name="preco" placeholder="Preço" required>
-    <select name="unidade">
-        <option value="kg">kg</option>
-        <option value="un">un</option>
-        <option value="L">L</option>
-        <option value="dz">dz</option>
-    </select>
+{% extends 'base.html' %}
 
-    <input name="estoque" placeholder="Estoque" required>
+{% block title %}Novo Produto{% endblock %}
 
-    <label>Categoria</label>
-    <select name="categoria">
-        {% for c in categorias %}
-            <option value="{{ c.id }}">{{ c.nome }}</option>
-        {% endfor %}
-    </select>
+{% block content %}
+<div class="container page-card">
+    <h1 class="page-title">Novo Produto</h1>
+    <form method="POST" enctype="multipart/form-data" class="form-grid">
+        <label class="form-label">Nome</label>
+        <input class="form-control" name="nome" placeholder="Nome" required>
 
-    <label>Produtor</label>
-    <select name="produtor">
-        {% for p in produtores %}
-            <option value="{{ p.id }}">{{ p.nome }}</option>
-        {% endfor %}
-    </select>
+        <label class="form-label">Descrição</label>
+        <textarea class="form-control" name="descricao" placeholder="Descrição"></textarea>
 
-    <label>Tags</label>
-    <input type="checkbox" name="tags" value="orgânico"> Orgânico
-    <input type="checkbox" name="tags" value="artesanal"> Artesanal
-    <input type="checkbox" name="tags" value="sem-agrotoxico"> Sem agrotóxico
+        <label class="form-label">Preço</label>
+        <input class="form-control" name="preco" placeholder="Preço" required>
 
-    <label>Promoção</label>
-    <input type="checkbox" name="promocao"> Produto em promoção
-    <input name="preco_promocional" placeholder="Preço promocional">
+        <label class="form-label">Unidade</label>
+        <select class="form-control" name="unidade">
+                <option value="kg">kg</option>
+                <option value="un">un</option>
+                <option value="L">L</option>
+                <option value="dz">dz</option>
+        </select>
 
-    <label>Sazonalidade</label>
-    <input type="date" name="inicio_sazonal">
-    <input type="date" name="fim_sazonal">
+        <label class="form-label">Estoque</label>
+        <input class="form-control" name="estoque" placeholder="Estoque" required>
 
-    <label>Imagens (até 5)</label>
-    <input type="file" name="imagens" multiple>
+        <label class="form-label">Categoria</label>
+        <select class="form-control" name="categoria">
+                {% for c in categorias %}
+                        <option value="{{ c.id }}">{{ c.nome }}</option>
+                {% endfor %}
+        </select>
 
-    <button type="submit">Salvar</button>
-</form>
+        <label class="form-label">Produtor</label>
+        <select class="form-control" name="produtor">
+                {% for p in produtores %}
+                        <option value="{{ p.id }}">{{ p.nome }}</option>
+                {% endfor %}
+        </select>
+
+        <div class="form-row">
+            <label class="form-label">Tags</label>
+            <div class="form-check">
+                <label><input type="checkbox" name="tags" value="orgânico"> Orgânico</label>
+                <label><input type="checkbox" name="tags" value="artesanal"> Artesanal</label>
+                <label><input type="checkbox" name="tags" value="sem-agrotoxico"> Sem agrotóxico</label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">Promoção</label>
+            <div class="form-check">
+                <label><input type="checkbox" name="promocao"> Produto em promoção</label>
+            </div>
+            <input class="form-control" name="preco_promocional" placeholder="Preço promocional">
+        </div>
+
+        <label class="form-label">Sazonalidade</label>
+        <div class="form-row">
+            <input class="form-control" type="date" name="inicio_sazonal">
+            <input class="form-control" type="date" name="fim_sazonal">
+        </div>
+
+        <label class="form-label">Imagens (até 5)</label>
+        <input class="form-control" type="file" name="imagens" multiple>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Salvar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

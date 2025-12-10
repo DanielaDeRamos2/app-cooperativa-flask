@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Produtores{% endblock %}
+
+{% block content %}
+<div class="page-container">
+  <div class="container">
+    <div class="page-header">
+      <h1><span class="material-symbols-outlined">people</span> Produtores</h1>
+      <p class="page-subtitle">Conheça os produtores locais e suas ofertas especiais</p>
+    </div>
+
+    {% if current_user.is_authenticated and current_user.tipo_usuario.value == 'Administrador' %}
+    <div class="action-bar">
+      <a class="btn btn-primary" href="/produtores/novo">
+        <span class="material-symbols-outlined">person_add</span> Cadastrar Produtor
+      </a>
+      <a class="btn btn-ghost" href="/produtores/">
+        <span class="material-symbols-outlined">list</span> Listar Produtores
+      </a>
+    </div>
+    {% endif %}
+
+    {% if produtores %}
+    <div class="cards-grid">
+      {% for p in produtores %}
+      <div class="producer-card{% if not p.ativo %} inactive{% endif %}">
+        <!-- Header do Card -->
+        <div class="producer-card-header">
+          <div class="producer-avatar"><span class="material-symbols-outlined">person_outline</span></div>
+          <div class="producer-card-title">
+            <h3>{{ p.nome }}</h3>
+            <p class="text-small">{{ p.endereco[:40] }}...</p>
+          </div>
+          <span class="status-badge {% if p.ativo %}active{% else %}inactive{% endif %}">
+            {{ 'Ativo' if p.ativo else 'Inativo' }}
+          </span>
+        </div>
+
+        <!-- Body do Card -->
+        <div class="producer-card-body">
+          <div class="info-row">
+            <span class="material-symbols-outlined">call</span>
+            <span>{{ p.telefone }}</span>
+          </div>
+          <div class="info-row">
+            <span class="material-symbols-outlined">mail</span>
+            <span>{{ p.email }}</span>
+          </div>
+          <div class="categories-row">
+            <span class="material-symbols-outlined">category</span>
+            <div class="chip-group">
+              {% for c in p.categorias %}
+              <span class="chip">{{ c.nome }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer do Card -->
+        <div class="producer-card-footer">
+          <a class="btn btn-ghost btn-small" href="/produtores/perfil/{{ p.id }}">
+            <span class="material-symbols-outlined">visibility</span> Perfil
+          </a>
+          <a class="btn btn-ghost btn-small" href="/produtores/vendas/{{ p.id }}">
+            <span class="material-symbols-outlined">trending_up</span> Vendas
+          </a>
+          {% if current_user.is_authenticated and current_user.tipo_usuario.value == 'Administrador' %}
+          {% if p.ativo %}
+            <a class="btn btn-danger btn-small" href="/produtores/status/{{ p.id }}/desativar">
+              <span class="material-symbols-outlined">block</span> Desativar
+            </a>
+          {% else %}
+            <a class="btn btn-primary btn-small" href="/produtores/status/{{ p.id }}/ativar">
+              <span class="material-symbols-outlined">check_circle</span> Ativar
+            </a>
+          {% endif %}
+          <form action="/produtores/excluir/{{ p.id }}" method="post" style="display:inline;" onsubmit="return confirm('Confirma exclusão deste produtor?');">
+            <button type="submit" class="btn btn-danger btn-small">
+              <span class="material-symbols-outlined">delete</span> Excluir
+            </button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <span class="material-symbols-outlined">person_off</span>
+      <h3>Nenhum produtor cadastrado</h3>
+      <p>Os produtores aparecerão aqui quando se registrarem na cooperativa.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

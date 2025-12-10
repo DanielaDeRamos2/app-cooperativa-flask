@@ -1,18 +1,38 @@
-<h1>{{ produtor.nome }}</h1>
-<p>{{ produtor.descricao }}</p>
-<p><strong>Endereço:</strong> {{ produtor.endereco }}</p>
+{% extends 'base.html' %}
 
-<h3>Certificações:</h3>
-<p>{{ produtor.certificacoes }}</p>
+{% block title %}{{ produtor.nome }}{% endblock %}
 
-<h3>Categorias:</h3>
-<ul>
-{% for c in produtor.categorias %}
-    <li>{{ c.nome }}</li>
-{% endfor %}
-</ul>
+{% block content %}
+<div class="container page-card">
+    <div class="producer-hero">
+        <h1 class="page-title">{{ produtor.nome }}</h1>
+        <p class="muted">{{ produtor.endereco }}</p>
+    </div>
 
-<h3>Fotos:</h3>
-{% for f in produtor.fotos %}
-    <img src="/static/uploads/produtores/{{ f.imagem }}" width="200">
-{% endfor %}
+    <div class="producer-body">
+        <section class="producer-info">
+            <h3>Sobre</h3>
+            <p>{{ produtor.descricao }}</p>
+
+            <h4>Certificações</h4>
+            <p>{{ produtor.certificacoes }}</p>
+
+            <h4>Categorias</h4>
+            <ul class="chips">
+                {% for c in produtor.categorias %}
+                    <li class="chip">{{ c.nome }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <aside class="producer-media">
+            <h4>Fotos</h4>
+            <div class="media-grid">
+                {% for f in produtor.fotos %}
+                    <img class="media-thumb" src="/static/uploads/produtores/{{ f.imagem }}" alt="{{ produtor.nome }}">
+                {% endfor %}
+            </div>
+        </aside>
+    </div>
+</div>
+{% endblock %}

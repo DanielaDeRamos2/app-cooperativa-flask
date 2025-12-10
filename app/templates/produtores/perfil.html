@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ produtor.nome }} - Perfil{% endblock %}
+
+{% block content %}
+<div class="page-container">
+  <!-- Hero Section -->
+  <div class="producer-hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">{% if produtor.ativo %}<span class="badge-active">✓ Ativo</span>{% endif %}</div>
+        <h1>{{ produtor.nome }}</h1>
+        <p class="hero-subtitle">
+          <span class="material-symbols-outlined">location_on</span>
+          {{ produtor.endereco }}
+        </p>
+        <div class="hero-contact">
+          <a href="tel:{{ produtor.telefone }}" class="contact-btn">
+            <span class="material-symbols-outlined">call</span> {{ produtor.telefone }}
+          </a>
+          <a href="mailto:{{ produtor.email }}" class="contact-btn">
+            <span class="material-symbols-outlined">mail</span> {{ produtor.email }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="profile-grid">
+      <!-- Coluna Principal -->
+      <div class="profile-main">
+        <!-- Sobre -->
+        <section class="profile-section">
+          <div class="section-header">
+            <h2><span class="material-symbols-outlined">info</span> Sobre a Propriedade</h2>
+          </div>
+          <p class="profile-description">{{ produtor.descricao }}</p>
+        </section>
+
+        <!-- Certificações -->
+        {% if produtor.certificacoes %}
+        <section class="profile-section">
+          <div class="section-header">
+            <h2><span class="material-symbols-outlined">verified</span> Certificações</h2>
+          </div>
+          <p>{{ produtor.certificacoes }}</p>
+        </section>
+        {% endif %}
+
+        <!-- Galeria de Fotos -->
+        <section class="profile-section">
+          <div class="section-header">
+            <h2><span class="material-symbols-outlined">image</span> Galeria</h2>
+          </div>
+          {% if produtor.fotos %}
+          <div class="photo-gallery">
+            {% for f in produtor.fotos %}
+            <div class="photo-item">
+              <img src="/static/uploads/produtores/{{ f.imagem }}" alt="{{ produtor.nome }}" loading="lazy">
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p class="text-muted">Nenhuma foto disponível ainda.</p>
+          {% endif %}
+        </section>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="profile-sidebar">
+        <!-- Categorias -->
+        <div class="sidebar-card">
+          <h3><span class="material-symbols-outlined">category</span> Categorias</h3>
+          <div class="chip-group">
+            {% for c in produtor.categorias %}
+            <span class="chip">{{ c.nome }}</span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="sidebar-card highlight">
+          <h3><span class="material-symbols-outlined">trending_up</span> Vendas</h3>
+          <div class="stat-box">
+            <div class="stat-value">R$ {{ '%.2f'|format(produtor.total_vendas()) }}</div>
+            <div class="stat-label">Total de vendas</div>
+          </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="sidebar-card">
+          <a href="/produtos/" class="btn btn-primary btn-block">
+            <span class="material-symbols-outlined">shopping_bag</span> Ver Produtos
+          </a>
+          <a href="/contato/" class="btn btn-secondary btn-block">
+            <span class="material-symbols-outlined">mail</span> Enviar Mensagem
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<style>
+  .producer-hero-section {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 60px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .hero-content h1 { color: white; margin: 16px 0; font-size: 2.5rem; }
+  .hero-subtitle { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; margin: 12px 0; }
+  .hero-contact { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .contact-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(255,255,255,0.2); border-radius: var(--radius); transition: var(--transition); }
+  .contact-btn:hover { background: rgba(255,255,255,0.3); }
+  
+  .profile-grid { display: grid; grid-template-columns: 1fr 320px; gap: 40px; margin: 40px 0; }
+  @media (max-width: 900px) { .profile-grid { grid-template-columns: 1fr; } }
+  
+  .profile-section { background: var(--surface); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 24px; }
+  .section-header h2 { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; margin: 0 0 16px 0; }
+  .profile-description { font-size: 1.05rem; line-height: 1.8; }
+  
+  .photo-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-top: 20px; }
+  .photo-item { aspect-ratio: 1; overflow: hidden; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+  .photo-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+  .photo-item:hover img { transform: scale(1.05); }
+  
+  .profile-sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .sidebar-card { background: var(--surface); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--border); }
+  .sidebar-card h3 { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; margin: 0 0 16px 0; }
+  .sidebar-card.highlight { background: linear-gradient(135deg, rgba(31,111,191,0.05), rgba(255,107,107,0.05)); border-color: var(--primary); }
+  
+  .stat-box { text-align: center; padding: 20px 0; }
+  .stat-value { font-size: 2rem; font-weight: 900; color: var(--primary); }
+  .stat-label { font-size: 0.9rem; color: var(--text-light); margin-top: 8px; }
+  
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { display: inline-block; background: var(--light); padding: 6px 12px; border-radius: 20px; font-size: 0.9rem; color: var(--text); }
+  
+  .btn-block { width: 100%; margin-bottom: 8px; }
+</style>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Vendas do Produtor{% endblock %}
+
+{% block content %}
+<div class="page-container">
+  <div class="container">
+    <div class="page-header">
+      <h1><span class="material-symbols-outlined">trending_up</span> Histórico de Vendas</h1>
+      <p class="page-subtitle">Acompanhe as vendas e rendimento da propriedade</p>
+    </div>
+
+    {% if vendas %}
+    <div class="sales-table-wrapper">
+      <table class="sales-table">
+        <thead>
+          <tr>
+            <th><span class="material-symbols-outlined">shopping_bag</span> Produto</th>
+            <th><span class="material-symbols-outlined">inventory_2</span> Quantidade</th>
+            <th><span class="material-symbols-outlined">attach_money</span> Valor (R$)</th>
+            <th><span class="material-symbols-outlined">calendar_today</span> Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for v in vendas %}
+          <tr>
+            <td>{{ v.produto }}</td>
+            <td>{{ v.quantidade }} un.</td>
+            <td class="price">R$ {{ '%.2f'|format(v.valor) }}</td>
+            <td>{{ v.data.strftime('%d/%m/%Y') if v.data else 'N/A' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <span class="material-symbols-outlined">trending_down</span>
+      <h3>Nenhuma venda registrada</h3>
+      <p>As vendas deste produtor aparecerão aqui quando forem realizadas.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .sales-table-wrapper {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin: 40px 0;
+  }
+
+  .sales-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .sales-table thead {
+    background: var(--light);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .sales-table th {
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sales-table th .material-symbols-outlined {
+    color: var(--primary);
+    font-size: 1.2rem;
+  }
+
+  .sales-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+  }
+
+  .sales-table tbody tr:hover {
+    background: rgba(31, 111, 191, 0.02);
+  }
+
+  .sales-table td {
+    padding: 16px;
+    color: var(--text);
+  }
+
+  .sales-table .price {
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  @media (max-width: 768px) {
+    .sales-table th,
+    .sales-table td {
+      padding: 12px 8px;
+      font-size: 0.9rem;
+    }
+
+    .sales-table th .material-symbols-outlined {
+      display: none;
+    }
+  }
+</style>
+{% endblock %}

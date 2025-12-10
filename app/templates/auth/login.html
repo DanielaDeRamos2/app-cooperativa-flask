@@ -1,90 +1,43 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - CoopVale</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #2D7F43, #FFC107); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        
-        .auth-container { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-width: 400px; width: 100%; }
-        .auth-header { text-align: center; margin-bottom: 30px; }
-        .auth-header h1 { color: #2D7F43; margin-bottom: 10px; font-size: 1.8em; }
-        .auth-header p { color: #666; }
-        
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #2D7F43; }
-        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 1em; }
-        input:focus { outline: none; border-color: #2D7F43; box-shadow: 0 0 5px rgba(45, 127, 67, 0.2); }
-        
-        .remember-me { display: flex; align-items: center; margin-bottom: 20px; }
-        .remember-me input { width: auto; margin-right: 8px; }
-        .remember-me label { margin-bottom: 0; }
-        
-        button { width: 100%; background: #2D7F43; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; font-weight: bold; }
-        button:hover { background: #1f5a2e; }
-        
-        .auth-links { text-align: center; margin-top: 20px; }
-        .auth-links a { color: #2D7F43; text-decoration: none; font-weight: bold; margin: 0 10px; }
-        .auth-links a:hover { text-decoration: underline; }
-        
-        .divider { text-align: center; margin: 20px 0; color: #999; }
-        
-        .alerts { margin-bottom: 20px; }
-        .alert { padding: 12px; border-radius: 5px; margin-bottom: 10px; }
-        .alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-    </style>
-</head>
-<body>
-    <div class="auth-container">
-        <div class="auth-header">
-            <h1>🌾 CoopVale</h1>
-            <p>Bem-vindo de volta!</p>
-        </div>
+{% extends 'base.html' %}
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            <div class="alerts">
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-            {% endif %}
-        {% endwith %}
+{% block title %}Login{% endblock %}
 
-        <form method="post">
-            <div class="form-group">
-                <label for="email">📧 Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="senha">🔐 Senha:</label>
-                <input type="password" id="senha" name="senha" required>
-            </div>
-
-            <div class="remember-me">
-                <input type="checkbox" id="remember_me" name="remember_me">
-                <label for="remember_me">Lembrar de mim</label>
-            </div>
-
-            <button type="submit">Login</button>
-        </form>
-
-        <div class="divider">OU</div>
-
-        <div class="auth-links">
-            <p>Não tem conta? <a href="{{ url_for('auth.register') }}">Cadastre-se</a></p>
-            <p><a href="{{ url_for('auth.forgot_password') }}">Esqueceu a senha?</a></p>
-        </div>
-
-        <div class="divider"></div>
-
-        <p style="text-align: center; color: #999; font-size: 0.9em;">
-            Ao fazer login, você concorda com nossos <a href="/sobre" style="color: #2D7F43;">Termos de Uso</a>
-        </p>
+{% block content %}
+<div class="container page-card small">
+    <div class="auth-header">
+        <h1 class="page-title">Bem-vindo de volta</h1>
+        <p class="muted">Faça login para acessar sua conta</p>
     </div>
-</body>
-</html>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="alerts">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="post" class="form-grid">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-control" type="email" id="email" name="email" required>
+
+        <label class="form-label" for="senha">Senha</label>
+        <input class="form-control" type="password" id="senha" name="senha" required>
+
+        <div class="form-row remember-me">
+            <label><input type="checkbox" id="remember_me" name="remember_me"> Lembrar de mim</label>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+    </form>
+
+    <div class="auth-links mt-12">
+        <p>Não tem conta? <a href="{{ url_for('auth.register') }}">Cadastre-se</a></p>
+        <p><a href="{{ url_for('auth.forgot_password') }}">Esqueceu a senha?</a></p>
+    </div>
+</div>
+{% endblock %}

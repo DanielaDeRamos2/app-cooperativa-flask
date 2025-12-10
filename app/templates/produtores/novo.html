@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Novo Produtor</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div>
+        <label>Nome</label>
+        <input type="text" name="nome" required>
+    </div>
+    <div>
+        <label>CPF</label>
+        <input type="text" name="cpf" required>
+    </div>
+    <div>
+        <label>Telefone</label>
+        <input type="text" name="telefone">
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" name="email">
+    </div>
+    <div>
+        <label>Nome da Propriedade</label>
+        <input type="text" name="nome_propriedade">
+    </div>
+    <div>
+        <label>Especialidade</label>
+        <input type="text" name="especialidade">
+    </div>
+    <div>
+        <label>Endereço</label>
+        <input type="text" name="endereco">
+    </div>
+    <div>
+        <label>Certificações (separadas por vírgula)</label>
+        <input type="text" name="certificacoes">
+    </div>
+    <div>
+        <label>Descrição</label>
+        <textarea name="descricao"></textarea>
+    </div>
+
+    <div>
+        <label>Categorias</label>
+        <div>
+            {% for categoria in categorias %}
+                <label>
+                    <input type="checkbox" name="categorias" value="{{ categoria.id }}"> {{ categoria.nome }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <label>Fotos</label>
+        <input type="file" name="fotos" multiple accept="image/*">
+    </div>
+
+    <div>
+        <button type="submit">Criar</button>
+    </div>
+</form>
+
+{% endblock %}

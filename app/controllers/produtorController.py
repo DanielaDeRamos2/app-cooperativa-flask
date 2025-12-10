@@ -12,7 +12,9 @@ def criar_produtor(usuario, dados, imagens=None):
         cpf=dados["cpf"],
         telefone=dados["telefone"],
         email=dados["email"],
-        endereco=dados["endereco"],
+        nome_propriedade=dados.get('nome_propriedade'),
+        especialidade=dados.get('especialidade'),
+        endereco=dados.get("endereco"),
         certificacoes=dados.get("certificacoes", ""),
         descricao=dados.get("descricao", "")
     )
@@ -24,14 +26,20 @@ def criar_produtor(usuario, dados, imagens=None):
     db.session.add(produtor)
     db.session.commit()
 
-    # salvar fotos
+    # salvar fotos: cria pasta e usa nome único com prefixo do id
+    upload_dir = os.path.join('app', 'static', 'uploads', 'produtores')
+    os.makedirs(upload_dir, exist_ok=True)
+
     if imagens:
         for img in imagens:
+            if not getattr(img, 'filename', None):
+                continue
             filename = secure_filename(img.filename)
-            filepath = os.path.join("app/static/uploads/produtores", filename)
+            unique_name = f"{produtor.id}_{filename}"
+            filepath = os.path.join(upload_dir, unique_name)
             img.save(filepath)
 
-            foto = FotoProdutor(produtor_id=produtor.id, imagem=filename)
+            foto = FotoProdutor(produtor_id=produtor.id, imagem=unique_name)
             db.session.add(foto)
 
         db.session.commit()
@@ -42,6 +50,60 @@ def criar_produtor(usuario, dados, imagens=None):
 def atualizar_status_produtor(produtor_id, ativo):
     produtor = Produtor.query.get(produtor_id)
     produtor.ativo = ativo
+    db.session.commit()
+    return produtor
+
+
+def atualizar_produtor(produtor_id, dados, imagens=None, remover_fotos_ids=None):
+    produtor = Produtor.query.get(produtor_id)
+    if not produtor:
+        return None
+
+    produtor.nome = dados.get('nome', produtor.nome)
+    produtor.cpf = dados.get('cpf', produtor.cpf)
+    produtor.telefone = dados.get('telefone', produtor.telefone)
+    produtor.email = dados.get('email', produtor.email)
+    produtor.nome_propriedade = dados.get('nome_propriedade', produtor.nome_propriedade)
+    produtor.especialidade = dados.get('especialidade', produtor.especialidade)
+    produtor.endereco = dados.get('endereco', produtor.endereco)
+    produtor.certificacoes = dados.get('certificacoes', produtor.certificacoes)
+    produtor.descricao = dados.get('descricao', produtor.descricao)
+
+    categorias_ids = dados.get('categorias', None)
+    if categorias_ids is not None:
+        produtor.categorias = Categoria.query.filter(Categoria.id.in_(categorias_ids)).all() if len(categorias_ids) > 0 else []
+
+    # remover fotos
+    if remover_fotos_ids:
+        for fid in remover_fotos_ids:
+            foto = FotoProdutor.query.get(fid)
+            if foto:
+                try:
+                    path = os.path.join('app', 'static', 'uploads', 'produtores', foto.imagem)
+                    if os.path.exists(path):
+                        os.remove(path)
+                except Exception:
+                    pass
+                db.session.delete(foto)
+
+    # adicionar novas imagens
+    upload_dir = os.path.join('app', 'static', 'uploads', 'produtores')
+    os.makedirs(upload_dir, exist_ok=True)
+    if imagens:
+        for img in imagens:
+            if not getattr(img, 'filename', None):
+                continue
+            filename = secure_filename(img.filename)
+            unique_name = f"{produtor.id}_{filename}"
+            filepath = os.path.join(upload_dir, unique_name)
+            img.save(filepath)
+            foto = FotoProdutor(produtor_id=produtor.id, imagem=unique_name)
+            db.session.add(foto)
+
+    if 'ativo' in dados:
+        val = dados.get('ativo')
+        produtor.ativo = True if str(val).lower() in ('1','true','on','yes') else False
+
     db.session.commit()
     return produtor
 

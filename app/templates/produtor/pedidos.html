@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Meus Pedidos{% endblock %}
+
+{% block content %}
+<div class="container page-card">
+  <h1 class="page-title">Pedidos do Produtor</h1>
+  <p class="page-subtitle">Lista de pedidos que incluem produtos deste produtor (template estático)</p>
+
+  {% if pedidos and pedidos|length > 0 %}
+    <ul class="simple-list">
+      {% for p in pedidos %}
+        <li>
+          Pedido #{{ p.id }} — {{ p.data }} — Itens: {{ p.itens|length }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="empty-state">
+      <span class="material-symbols-outlined">inbox</span>
+      <h3>Sem pedidos encontrados</h3>
+      <p>Os pedidos que contêm seus produtos aparecerão aqui.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -17,6 +17,10 @@ class Produtor(db.Model):
     telefone = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), nullable=False)
 
+    # Dados adicionais da propriedade
+    nome_propriedade = db.Column(db.String(150))
+    especialidade = db.Column(db.String(150))
+
     endereco = db.Column(db.Text, nullable=False)
     certificacoes = db.Column(db.Text)
     descricao = db.Column(db.Text)

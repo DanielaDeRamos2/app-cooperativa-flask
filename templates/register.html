@@ -1,13 +1,28 @@
-<form method="POST">
-    <input type="email" name="email" placeholder="E-mail" required>
-    <input type="password" name="senha" placeholder="Senha" required>
+{% extends 'base.html' %}
 
-    <select name="tipo_usuario">
-        <option value="Administrador">Administrador</option>
-        <option value="Produtor">Produtor</option>
-        <option value="Cliente">Cliente</option>
-        <option value="Visitante">Visitante</option>
-    </select>
+{% block title %}Registrar{% endblock %}
 
-    <button type="submit">Cadastrar</button>
-</form>
+{% block content %}
+<div class="container page-card small">
+    <h1 class="page-title">Criar Conta</h1>
+    <form method="POST" class="form-grid">
+        <label class="form-label">Email</label>
+        <input class="form-control" type="email" name="email" placeholder="E-mail" required>
+
+        <label class="form-label">Senha</label>
+        <input class="form-control" type="password" name="senha" placeholder="Senha" required>
+
+        <label class="form-label">Tipo de usuário</label>
+        <select class="form-control" name="tipo_usuario">
+                <option value="Administrador">Administrador</option>
+                <option value="Produtor">Produtor</option>
+                <option value="Cliente">Cliente</option>
+                <option value="Visitante">Visitante</option>
+        </select>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Cadastrar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

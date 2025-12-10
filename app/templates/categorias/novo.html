@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
+
+{% block title %}Nova Categoria{% endblock %}
+
 {% block content %}
-<h2>Nova Categoria</h2>
-<form method="post">
-  <label>Nome:</label><input type="text" name="nome"><br>
-  <label>Descrição:</label><input type="text" name="descricao"><br>
-  <button type="submit">Salvar</button>
-</form>
+<div class="container page-card small">
+  <h1 class="page-title">Nova Categoria</h1>
+  <form method="post" class="form-grid">
+    <label class="form-label">Nome</label>
+    <input class="form-control" type="text" name="nome">
+
+    <label class="form-label">Descrição</label>
+    <input class="form-control" type="text" name="descricao">
+
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit">Salvar</button>
+    </div>
+  </form>
+</div>
 {% endblock %}

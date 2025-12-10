@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}Comprovante #{{ pedido.id }}{% endblock %}
+{% block title %}Pedido #{{ pedido.id }}{% endblock %}
 
 {% block content %}
 <div class="container page-card">
-  <h1 class="page-title">Comprovante de Pedido #{{ pedido.id }}</h1>
+  <h1 class="page-title">Detalhes do Pedido #{{ pedido.id }}</h1>
 
   <div class="order-meta">
     <div><strong>Cliente:</strong> {{ pedido.cliente.nome }}</div>
     <div><strong>Data:</strong> {{ pedido.data }}</div>
     <div><strong>Status:</strong> {{ pedido.status }}</div>
+    <div><strong>Pagamento:</strong> {{ pedido.forma_pagamento }}</div>
   </div>
 
   <div class="order-items">
@@ -28,5 +29,9 @@
   </div>
 
   <div class="order-total">Total: <strong>R$ {{ pedido.total }}</strong></div>
+
+  <div style="margin-top:16px;">
+    <a class="btn btn-primary" href="/pedidos/nota/{{ pedido.id }}">Imprimir Comprovante</a>
+  </div>
 </div>
 {% endblock %}

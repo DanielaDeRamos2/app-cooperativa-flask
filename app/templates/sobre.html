@@ -1,5 +1,395 @@
 {% extends 'base.html' %}
+
+{% block title %}Sobre Nós - CoopVale - Cooperativa Rural Sustentável{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+        color: white;
+        padding: 80px 20px;
+        text-align: center;
+    }
+
+    .about-hero h1 {
+        color: white;
+        margin-bottom: 16px;
+    }
+
+    .about-hero p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .about-section {
+        padding: 80px 20px;
+    }
+
+    .about-content {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .about-intro {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+        margin-bottom: 80px;
+    }
+
+    .about-intro-text h2 {
+        color: var(--primary-green);
+    }
+
+    .about-intro-text p {
+        color: var(--text-light);
+        line-height: 1.8;
+        margin-bottom: 16px;
+        font-size: 1.05rem;
+    }
+
+    .about-intro-visual {
+        background: linear-gradient(135deg, rgba(45, 90, 61, 0.1), rgba(139, 111, 71, 0.1));
+        border-radius: var(--radius-lg);
+        padding: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: var(--primary-green);
+        min-height: 300px;
+    }
+
+    .about-values {
+        background: var(--light);
+        padding: 60px 20px;
+        margin: 80px 0;
+        border-radius: var(--radius-lg);
+    }
+
+    .about-values h2 {
+        text-align: center;
+        color: var(--primary-green);
+        margin-bottom: 50px;
+    }
+
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 30px;
+    }
+
+    .value-card {
+        background: var(--surface);
+        padding: 32px 24px;
+        border-radius: var(--radius-lg);
+        text-align: center;
+        box-shadow: var(--shadow-md);
+        border: 2px solid transparent;
+        transition: var(--transition);
+    }
+
+    .value-card:hover {
+        border-color: var(--primary-green);
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .value-icon {
+        font-size: 2.5rem;
+        color: var(--primary-green);
+        margin-bottom: 16px;
+    }
+
+    .value-card h3 {
+        color: var(--primary-green);
+        margin-bottom: 12px;
+    }
+
+    .value-card p {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    .about-history {
+        background: var(--surface);
+        padding: 40px;
+        border-radius: var(--radius-lg);
+        border-left: 4px solid var(--accent-gold);
+    }
+
+    .about-history h3 {
+        color: var(--primary-green);
+        margin-top: 0;
+    }
+
+    .about-history p {
+        color: var(--text-light);
+        line-height: 1.8;
+    }
+
+    .about-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin: 60px 0;
+        text-align: center;
+    }
+
+    .stat-card {
+        padding: 32px 20px;
+        background: linear-gradient(135deg, rgba(45, 90, 61, 0.08), rgba(139, 111, 71, 0.08));
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 900;
+        color: var(--primary-green);
+        margin-bottom: 8px;
+    }
+
+    .stat-label {
+        color: var(--text-light);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+    }
+
+    .about-team {
+        margin-top: 80px;
+    }
+
+    .about-team h2 {
+        text-align: center;
+        color: var(--primary-green);
+        margin-bottom: 50px;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 30px;
+    }
+
+    .team-member {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+        border: 1px solid var(--border);
+    }
+
+    .team-member:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .team-avatar {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+    }
+
+    .team-info {
+        padding: 24px;
+        text-align: center;
+    }
+
+    .team-info h3 {
+        color: var(--primary-green);
+        margin: 0 0 4px;
+    }
+
+    .team-role {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .about-intro {
+            grid-template-columns: 1fr;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+        }
+
+        .about-hero {
+            padding: 60px 20px;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<h2>Sobre Nós</h2>
-<p>CoopVale - Cooperativa de Produtores Rurais do Vale Verde. Grupo de 45 produtores rurais promovendo vendas online com identidade local e modelo cooperativista.</p>
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <h1>Sobre CoopVale</h1>
+        <p>Conectando produtores rurais sustentáveis com consumidores conscientes através de comércio justo e digital</p>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <section class="about-section">
+        <div class="about-content">
+            <!-- Introdução -->
+            <div class="about-intro">
+                <div class="about-intro-text">
+                    <h2>Nossa História</h2>
+                    <p>CoopVale nasceu em 2020 com uma missão clara: revolucionar a forma como produtores rurais vendem seus produtos. Somos uma cooperativa digital que reúne 45 produtores da região em uma plataforma única de e-commerce.</p>
+                    <p>Acreditamos que consumidores merecem produtos frescos, sustentáveis e rastreáveis. E produtores merecem preços justos e acesso a novos mercados. CoopVale é onde essas duas necessidades se encontram.</p>
+                    <p>Cada compra realizada em nossa plataforma é um voto de confiança no desenvolvimento rural sustentável da nossa região.</p>
+                </div>
+                <div class="about-intro-visual">
+                    <span class="material-symbols-outlined">agriculture</span>
+                </div>
+            </div>
+
+            <!-- Estatísticas -->
+            <div class="about-stats">
+                <div class="stat-card">
+                    <div class="stat-number">45+</div>
+                    <div class="stat-label">Produtores Parceiros</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2.500+</div>
+                    <div class="stat-label">Clientes Ativos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15.000+</div>
+                    <div class="stat-label">Pedidos Realizados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Categorias de Produtos</div>
+                </div>
+            </div>
+
+            <!-- Valores -->
+            <div class="about-values">
+                <h2>Nossos Valores</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <span class="material-symbols-outlined">eco</span>
+                        </div>
+                        <h3>Sustentabilidade</h3>
+                        <p>Comprometidos com práticas ambientais responsáveis e preservação do meio rural</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <span class="material-symbols-outlined">handshake</span>
+                        </div>
+                        <h3>Comércio Justo</h3>
+                        <p>Remuneração digna para produtores e preços justos para consumidores</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <span class="material-symbols-outlined">verified</span>
+                        </div>
+                        <h3>Qualidade</h3>
+                        <p>Padrões rigorosos para garantir os melhores produtos frescos</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <span class="material-symbols-outlined">community</span>
+                        </div>
+                        <h3>Comunidade</h3>
+                        <p>Fortalecer laços entre produtores e consumidores locais</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <span class="material-symbols-outlined">transparency</span>
+                        </div>
+                        <h3>Transparência</h3>
+                        <p>Rastreabilidade completa desde o produtor até sua mesa</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <span class="material-symbols-outlined">trending_up</span>
+                        </div>
+                        <h3>Inovação</h3>
+                        <p>Tecnologia digital a serviço da agricultura familiar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- História -->
+            <div class="about-history">
+                <h3>Nossa Jornada</h3>
+                <p>Iniciamos com um pequeno grupo de 5 produtores. Hoje somos 45, gerando cerca de 200 empregos diretos na região. Nossa plataforma processa mais de 50 pedidos por dia, transportando alimentos frescos de forma rápida e responsável.</p>
+                <p>Cada ano, reinvestimos parte dos lucros em treinamentos para produtores, melhorias na plataforma e projetos comunitários. Queremos crescer de forma sustentável, mantendo nossos valores fundamentais.</p>
+            </div>
+
+            <!-- Equipe (opcional) -->
+            <div class="about-team">
+                <h2>Conheça Nossa Equipe</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        <div class="team-info">
+                            <h3>João Silva</h3>
+                            <p class="team-role">Fundador & CEO</p>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        <div class="team-info">
+                            <h3>Maria Santos</h3>
+                            <p class="team-role">Gerente de Operações</p>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        <div class="team-info">
+                            <h3>Pedro Oliveira</h3>
+                            <p class="team-role">Gerente de Produtos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Final -->
+            <div style="text-align: center; margin-top: 80px; padding: 40px; background: var(--light); border-radius: var(--radius-lg);">
+                <h2 style="color: var(--primary-green); margin-top: 0;">Junte-se à Nossa Comunidade</h2>
+                <p>Seja um consumidor consciente ou um produtor parceiro, CoopVale tem espaço para você.</p>
+                <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                    <a href="/produtos" class="btn-primary" style="gap: 8px; display: inline-flex; align-items: center;">
+                        <span class="material-symbols-outlined">shopping_bag</span>
+                        Explorar Produtos
+                    </a>
+                    <a href="/contato" class="btn-primary" style="gap: 8px; display: inline-flex; align-items: center; background: var(--accent-earth);">
+                        <span class="material-symbols-outlined">mail</span>
+                        Fale Conosco
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
